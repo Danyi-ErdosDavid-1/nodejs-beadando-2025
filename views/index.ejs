@@ -1,0 +1,140 @@
+<%- include('partials/header', { title }) %>
+
+<header class="hero">
+  <div class="container py-5">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <p class="badge bg-light text-dark fw-semibold mb-3">Autentikáció • CRUD • MySQL</p>
+        <h1 class="display-5 fw-bold">Modern érettségi felügyeleti felület NodeJS + MySQL alapokon</h1>
+        <p class="lead mt-3 text-white-80">Reszponzív mintaoldal, ami bemutatja az autentikációt, az adatbázis műveleteket és a vizsgák elemzését a három táblás érettségi adatbázison.</p>
+        <div class="d-flex gap-3 mt-4">
+          <a class="btn btn-light btn-lg" href="/app117/adatbazis">Adatbázis megtekintése</a>
+          <a class="btn btn-outline-light btn-lg" href="/app117/kapcsolat">Kapcsolatfelvétel</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="glass-card p-4 shadow-lg">
+          <h5 class="fw-bold mb-3">Belépés röviden</h5>
+          <ol class="list-unstyled small text-white-80 mb-3">
+            <li class="mb-2">1. Regisztrálj vagy lépj be admin fiókkal.</li>
+            <li class="mb-2">2. Nézd meg a vizsgák élő adatait.</li>
+            <li class="mb-2">3. Admin szerepkörrel kezeld a vizsgatárgyakat.</li>
+            <li>4. A Kapcsolat űrlap minden üzenetet naplóz.</li>
+          </ol>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge rounded-pill bg-light text-dark">Express</span>
+            <span class="badge rounded-pill bg-light text-dark">EJS</span>
+            <span class="badge rounded-pill bg-light text-dark">MySQL</span>
+            <span class="badge rounded-pill bg-light text-dark">Session</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <p class="section-kicker">Adatbázis</p>
+        <h2 class="fw-bold">Top vizsgatárgyak</h2>
+      </div>
+      <a class="btn btn-outline-primary" href="/app117/adatbazis">Részletek</a>
+    </div>
+    <div class="row g-4">
+      <% subjects.forEach((subject) => { %>
+        <div class="col-md-6 col-xl-3">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body">
+              <p class="text-uppercase text-muted small mb-1">Átlag összpontszám</p>
+              <h3 class="fw-bold"><%= subject.avg_total.toFixed(1) %></h3>
+              <p class="fw-semibold"><%= subject.name %></p>
+              <p class="small text-muted mb-0">max szóbeli: <%= subject.oral_max || '—' %> • max írásbeli: <%= subject.written_max || '—' %></p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-5">
+        <p class="section-kicker">Hallgatók</p>
+        <h2 class="fw-bold mb-3">Legjobban teljesítő diákok</h2>
+        <p class="text-muted">A lista a teljes adatbázis alapján számolt átlagos összpontszámot mutatja. A szerepkör alapú autentikáció miatt minden bejelentkezett felhasználó látja a kimutatást, míg az admin CRUD műveleteket is végezhet.</p>
+        <ul class="list-unstyled mt-3">
+          <li class="mb-2"><strong>Autentikáció:</strong> regisztráció, bejelentkezés, kilépés</li>
+          <li class="mb-2"><strong>Adatok:</strong> három tábla (vizsgázó, tárgy, vizsga)</li>
+          <li class="mb-2"><strong>Üzenetek:</strong> kapcsolat űrlap mentés + visszajelzés</li>
+          <li class="mb-2"><strong>CRUD:</strong> vizsgatárgyak kezelése admin szerepkörrel</li>
+        </ul>
+      </div>
+      <div class="col-lg-7">
+        <div class="table-responsive shadow-sm rounded bg-white">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Név</th>
+                <th>Osztály</th>
+                <th>Átlag pont</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach((student) => { %>
+                <tr>
+                  <td><%= student.name %></td>
+                  <td><%= student.class_name %></td>
+                  <td class="fw-semibold"><%= student.avg_total.toFixed(1) %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <p class="section-kicker">Minta adatok</p>
+        <h2 class="fw-bold">Friss vizsgaeredmények</h2>
+      </div>
+      <a class="btn btn-outline-primary" href="/app117/adatbazis">Teljes lista</a>
+    </div>
+    <div class="table-responsive shadow-sm rounded bg-white">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Diák</th>
+            <th>Tárgy</th>
+            <th>Osztály</th>
+            <th>Szóbeli</th>
+            <th>Írásbeli</th>
+            <th>Összesen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sampleRows.forEach((row) => { %>
+            <tr>
+              <td><%= row.student_name %></td>
+              <td><%= row.subject_name %></td>
+              <td><%= row.class_name %></td>
+              <td><%= row.oral_score %></td>
+              <td><%= row.written_score %></td>
+              <td class="fw-semibold"><%= row.total_score %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

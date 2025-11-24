@@ -1,0 +1,38 @@
+<%- include('partials/header', { title }) %>
+
+<div class="container py-5">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <p class="section-kicker">Üzenetek</p>
+      <h1 class="fw-bold mb-1">Beérkezett kapcsolatfelvételek</h1>
+      <p class="text-muted mb-0">Csak bejelentkezett felhasználók láthatják. A listát időrendben, legfrissebb elöl rendezzük.</p>
+    </div>
+    <a class="btn btn-outline-primary" href="/app117/kapcsolat">Új üzenet</a>
+  </div>
+  <div class="table-responsive shadow-sm rounded bg-white">
+    <table class="table align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Név</th>
+          <th>E-mail</th>
+          <th>Üzenet</th>
+          <th>Küldve</th>
+          <th>Felhasználó</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% messages.forEach((msg) => { %>
+          <tr>
+            <td><%= msg.name %></td>
+            <td><%= msg.email %></td>
+            <td><%= msg.body %></td>
+            <td><%= new Date(msg.created_at).toLocaleString('hu-HU') %></td>
+            <td><%= msg.username || 'vendég' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

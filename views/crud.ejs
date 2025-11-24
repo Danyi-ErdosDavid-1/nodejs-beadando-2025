@@ -1,0 +1,74 @@
+<%- include('partials/header', { title }) %>
+
+<div class="container py-5">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <p class="section-kicker">Admin</p>
+      <h1 class="fw-bold mb-3">Vizsgatárgyak CRUD</h1>
+      <p class="text-muted">Új tárgyak felvétele, meglévők módosítása vagy törlése. A műveletek azonnal az adatbázisba írnak.</p>
+      <div class="card shadow-sm border-0 mt-3">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">Új vizsgatárgy</h5>
+          <form action="/app117/crud" method="post" class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="name">Megnevezés</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="oral_max">Szóbeli maximum</label>
+              <input type="number" class="form-control" id="oral_max" name="oral_max" min="0" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="written_max">Írásbeli maximum</label>
+              <input type="number" class="form-control" id="written_max" name="written_max" min="0" required>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary w-100">Hozzáadás</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="table-responsive shadow-sm rounded bg-white">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Név</th>
+              <th>Szóbeli max</th>
+              <th>Írásbeli max</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% subjects.forEach((subject) => { %>
+              <form id="update-<%= subject.id %>" action="/app117/crud/<%= subject.id %>/update" method="post"></form>
+              <tr>
+                  <td class="col-12 col-lg-4">
+                    <input form="update-<%= subject.id %>" class="form-control form-control-sm" type="text" name="name" value="<%= subject.name %>" required>
+                  </td>
+                  <td class="col-6 col-lg-2">
+                    <input form="update-<%= subject.id %>" class="form-control form-control-sm" type="number" name="oral_max" value="<%= subject.oral_max %>" min="0" required>
+                  </td>
+                  <td class="col-6 col-lg-2">
+                    <input form="update-<%= subject.id %>" class="form-control form-control-sm" type="number" name="written_max" value="<%= subject.written_max %>" min="0" required>
+                  </td>
+                  <td class="col-12 col-lg-4">
+                    <div class="d-flex gap-2">
+                      <button form="update-<%= subject.id %>" type="submit" class="btn btn-sm btn-primary">Mentés</button>
+                      <form action="/app117/crud/<%= subject.id %>/delete" method="post" onsubmit="return confirm('Biztosan törlöd?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Törlés</button>
+                      </form>
+                    </div>
+                  </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

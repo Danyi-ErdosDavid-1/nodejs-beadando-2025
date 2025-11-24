@@ -1,0 +1,47 @@
+<%- include('partials/header', { title }) %>
+
+<div class="container py-5">
+  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+      <p class="section-kicker">Adatbázis</p>
+      <h1 class="fw-bold mb-1">Vizsgaeredmények három táblából</h1>
+      <p class="text-muted mb-0">A vizsgázók, vizsgatárgyak és vizsgák táblái össze vannak kapcsolva a listában. Szűrj tárgyakra és böngészd a pontokat.</p>
+    </div>
+    <form class="d-flex gap-2" method="get">
+      <select class="form-select" name="subject" onchange="this.form.submit()">
+        <option value="">Összes tárgy</option>
+        <% subjects.forEach((subject) => { %>
+          <option value="<%= subject.id %>" <%= activeSubject === subject.id ? 'selected' : '' %>><%= subject.name %></option>
+        <% }) %>
+      </select>
+    </form>
+  </div>
+  <div class="table-responsive shadow-sm rounded bg-white">
+    <table class="table align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Vizsgázó</th>
+          <th>Osztály</th>
+          <th>Tárgy</th>
+          <th>Szóbeli</th>
+          <th>Írásbeli</th>
+          <th>Összesen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.forEach((row) => { %>
+          <tr>
+            <td><%= row.student_name %></td>
+            <td><%= row.class_name %></td>
+            <td><%= row.subject_name %></td>
+            <td><%= row.oral_score %></td>
+            <td><%= row.written_score %></td>
+            <td class="fw-semibold"><%= row.total_score %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

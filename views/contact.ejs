@@ -1,0 +1,44 @@
+<%- include('partials/header', { title }) %>
+
+<div class="container py-5">
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <p class="section-kicker">Kapcsolat</p>
+      <h1 class="fw-bold">Írj üzenetet az oldal tulajdonosának</h1>
+      <p class="text-muted">Az üzenetek időbélyeggel kerülnek mentésre az adatbázisban. Belépett felhasználóként az Üzenetek menüpont alatt visszanézhető minden beküldés.</p>
+      <div class="mt-4 p-4 rounded shadow-sm bg-light">
+        <p class="mb-2 fw-semibold">Mire jó ez a forma?</p>
+        <ul class="text-muted mb-0">
+          <li>Bizonyítja az űrlapkezelést és a POST műveleteket.</li>
+          <li>Minta az adatbázisba mentésre és listázásra.</li>
+          <li>Kapcsolódik a szerepkör alapú hozzáféréshez.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form action="/app117/kapcsolat" method="post" class="row g-3">
+            <div class="col-12">
+              <label for="name" class="form-label">Név</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Kiss Júlia" required>
+            </div>
+            <div class="col-12">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="pelda@iskola.hu" required>
+            </div>
+            <div class="col-12">
+              <label for="message" class="form-label">Üzenet</label>
+              <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary w-100">Üzenet küldése</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
